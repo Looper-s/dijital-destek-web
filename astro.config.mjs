@@ -5,4 +5,8 @@ export default defineConfig({
   integrations: [tailwind()],
   site: "https://looper-s.github.io",
   base: "/dijital-destek-web",
+  outDir: "./dist",
+  build: {
+    assets: "assets",
+  },
 });
