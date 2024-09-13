@@ -2,6 +2,7 @@
   "name": "cd-astro-html",
   "type": "module",
   "version": "0.0.1",
+  "homepage": "https://looper-s.github.io/dijital-destek-web/",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
