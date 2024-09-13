@@ -15,9 +15,9 @@ const features = [
 ];
 
 const customerStories = [
-  { name: 'ABC Şirketi', story: 'E-dönüşüm projesi sayesinde verimliliğimizi %30 artırdık.', image: '/images/customer1.jpg' },
-  { name: 'XYZ Firması', story: 'Müşteri memnuniyetimiz %25 yükseldi.', image: '/images/customer2.jpg' },
-  { name: '123 Holding', story: 'Operasyonel maliyetlerimizi %20 azalttık.', image: '/images/customer3.jpg' },
+  { name: 'ABC Şirketi', story: 'E-dönüşüm projesi sayesinde verimliliğimizi %30 artırdık.', image: 'https://placehold.co/300x300/png?text=ABC+Şirketi' },
+  { name: 'XYZ Firması', story: 'Müşteri memnuniyetimiz %25 yükseldi.', image: 'https://placehold.co/300x300/png?text=XYZ+Firması' },
+  { name: '123 Holding', story: 'Operasyonel maliyetlerimizi %20 azalttık.', image: 'https://placehold.co/300x300/png?text=123+Holding' },
 ];
 
 const stats = [
@@ -45,6 +45,41 @@ const faqs = [
     answer: "Hemen hemen tüm sektörler e-dönüşümden faydalanabilir. Perakende, üretim, finans, sağlık ve eğitim başlıca örneklerdir."
   }
 ];
+
+// En çok okunan blog yazıları
+const topBlogPosts = [
+  {
+    id: 1,
+    title: 'E-Dönüşümün İşletmelere Sağladığı 5 Temel Fayda',
+    excerpt: 'Dijital dönüşüm, işletmelere birçok avantaj sağlıyor. Bu yazıda, e-dönüşümün işletmelere sağladığı 5 temel faydayı inceliyoruz.',
+    date: '15 Mayıs 2023',
+    author: 'Ahmet Yılmaz',
+    image: 'https://placehold.co/600x400/png?text=E-Dönüşüm',
+    category: 'E-Dönüşüm',
+    viewCount: 1250
+  },
+  {
+    id: 2,
+    title: 'Veri Analitiğinin İş Süreçlerine Etkisi',
+    excerpt: 'Veri analitiği, işletmelerin karar verme süreçlerini nasıl etkiliyor? Bu makalede, veri odaklı karar vermenin önemini ele alıyoruz.',
+    date: '2 Haziran 2023',
+    author: 'Ayşe Kaya',
+    image: 'https://placehold.co/600x400/png?text=Veri+Analitiği',
+    category: 'Veri Analitiği',
+    viewCount: 1500
+  },
+  {
+    id: 3,
+    title: 'Bulut Teknolojileri ve İş Sürekliliği',
+    excerpt: 'Bulut teknolojileri, iş sürekliliğini nasıl sağlıyor? Bu yazıda, bulut çözümlerinin işletmelere sunduğu avantajları inceliyoruz.',
+    date: '20 Haziran 2023',
+    author: 'Mehmet Demir',
+    image: 'https://placehold.co/600x400/png?text=Bulut+Teknolojileri',
+    category: 'Bulut Teknolojileri',
+    viewCount: 1100
+  }
+];
+
 ---
 
 <Layout title="E-Dönüşüm Projesi">
@@ -137,6 +172,37 @@ const faqs = [
 				<a href="/iletisim" class="bg-white text-primary-600 font-bold py-3 px-8 rounded-full transition duration-300 hover:bg-gray-100 inline-block">
 					Ücretsiz Danışmanlık Alın
 				</a>
+			</div>
+		</section>
+
+		<!-- Blog Bölümü -->
+		<section class="py-20 bg-white">
+			<div class="container mx-auto px-4 max-w-6xl">
+				<h2 class="text-3xl font-bold mb-12 text-center text-gray-800">En Çok Okunan Blog Yazıları</h2>
+				<div class="grid md:grid-cols-3 gap-8">
+					{topBlogPosts.map((post) => (
+						<div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+							<img src={post.image} alt={post.title} class="w-full h-48 object-cover" />
+							<div class="p-6">
+								<div class="flex justify-between items-center mb-2">
+									<span class="text-sm text-gray-500">{post.date}</span>
+									<span class="text-sm text-primary-600 font-semibold">{post.category}</span>
+								</div>
+								<h3 class="text-xl font-semibold mb-2 text-gray-800">{post.title}</h3>
+								<p class="text-gray-600 mb-4 line-clamp-2">{post.excerpt}</p>
+								<div class="flex justify-between items-center">
+									<span class="text-sm text-gray-500">{post.author}</span>
+									<a href={`/blog/${post.id}`} class="text-primary-600 hover:text-primary-700 transition duration-300">Devamını Oku →</a>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+				<div class="text-center mt-12">
+					<a href="/blog" class="bg-primary-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 hover:bg-primary-700">
+						Tüm Blog Yazıları
+					</a>
+				</div>
 			</div>
 		</section>
 	</main>

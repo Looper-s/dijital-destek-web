@@ -13,10 +13,10 @@ const hizmetler = [
 ];
 
 const referanslar = [
-  { isim: 'ABC Şirketi', logo: '/images/logos/abc.png' },
-  { isim: 'XYZ Holding', logo: '/images/logos/xyz.png' },
-  { isim: '123 Teknoloji', logo: '/images/logos/123.png' },
-  { isim: 'Mega Grup', logo: '/images/logos/mega.png' },
+  { isim: 'ABC Şirketi', logo: 'https://placehold.co/200x100/png?text=ABC+Şirketi' },
+  { isim: 'XYZ Holding', logo: 'https://placehold.co/200x100/png?text=XYZ+Holding' },
+  { isim: '123 Teknoloji', logo: 'https://placehold.co/200x100/png?text=123+Teknoloji' },
+  { isim: 'Mega Grup', logo: 'https://placehold.co/200x100/png?text=Mega+Grup' },
 ];
 ---
 
@@ -25,8 +25,7 @@ const referanslar = [
   <main class="bg-gradient-to-b from-primary-50 to-secondary-50 py-20">
     <div class="container mx-auto px-4 max-w-6xl">
       <h1 class="text-4xl sm:text-5xl font-bold mb-12 text-center text-gray-800">
-        <span class="font-future text-primary-600 block mb-2">Hizmetlerimiz</span>
-        E-Dönüşüm Çözümleri
+        Hizmetlerimiz
       </h1>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
         {hizmetler.map((hizmet) => (

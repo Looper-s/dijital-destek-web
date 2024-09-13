@@ -1,0 +1,389 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const blogPosts = [
+    {
+      id: 1,
+      title: 'E-Dönüşümün İşletmelere Sağladığı 5 Temel Fayda',
+      content: 'Bu yazıda, e-dönüşümün işletmelere sağladığı 5 temel faydayı detaylı bir şekilde inceliyoruz...',
+      date: '15 Mayıs 2023',
+      author: 'Ahmet Yılmaz',
+      image: 'https://placehold.co/1200x600/png?text=E-Dönüşüm',
+      category: 'E-Dönüşüm',
+      tags: ['Dijital Dönüşüm', 'İş Verimliliği', 'Teknoloji'],
+      readingTime: '5 dakika',
+      viewCount: 1250,
+      likeCount: 87
+    },
+    {
+      id: 2,
+      title: 'Veri Analitiğinin İş Süreçlerine Etkisi',
+      content: 'Bu makalede, veri odaklı karar vermenin önemini ve iş süreçlerine etkisini detaylı bir şekilde ele alıyoruz...',
+      date: '2 Haziran 2023',
+      author: 'Ayşe Kaya',
+      image: 'https://placehold.co/1200x600/png?text=Veri+Analitiği',
+      category: 'Veri Analitiği',
+      tags: ['Büyük Veri', 'İş Zekası', 'Karar Verme'],
+      readingTime: '7 dakika',
+      viewCount: 1500,
+      likeCount: 120
+    },
+    {
+      id: 3,
+      title: 'Bulut Teknolojileri ve İş Sürekliliği',
+      content: 'Bu yazıda, bulut çözümlerinin işletmelere sunduğu avantajları ve iş sürekliliğine olan katkılarını inceliyoruz...',
+      date: '20 Haziran 2023',
+      author: 'Mehmet Demir',
+      image: 'https://placehold.co/1200x600/png?text=Bulut+Teknolojileri',
+      category: 'Bulut Teknolojileri',
+      tags: ['Cloud Computing', 'İş Sürekliliği', 'Ölçeklenebilirlik'],
+      readingTime: '6 dakika',
+      viewCount: 1100,
+      likeCount: 95
+    },
+    {
+      id: 4,
+      title: 'Yapay Zeka ve İş Dünyasındaki Uygulamaları',
+      content: 'Yapay zeka teknolojilerinin iş dünyasında nasıl kullanıldığını ve gelecekteki potansiyel uygulamalarını inceliyoruz.',
+      date: '5 Temmuz 2023',
+      author: 'Zeynep Yılmaz',
+      image: 'https://placehold.co/1200x600/png?text=Yapay+Zeka',
+      category: 'Yapay Zeka',
+      tags: ['Yapay Zeka', 'İş Zekası', 'Gelecek Teknolojileri'],
+      readingTime: '8 dakika',
+      viewCount: 1800,
+      likeCount: 150
+    },
+    {
+      id: 5,
+      title: 'Siber Güvenlik: İşletmeler İçin Temel Stratejiler',
+      content: 'Dijital dünyada işletmelerin karşılaştığı siber tehditler ve bunlara karşı alınabilecek önlemler hakkında bilgi veriyoruz.',
+      date: '18 Temmuz 2023',
+      author: 'Can Öztürk',
+      image: 'https://placehold.co/1200x600/png?text=Siber+Güvenlik',
+      category: 'Siber Güvenlik',
+      tags: ['Siber Güvenlik', 'Veri Güvenliği', 'Güvenlik Stratejileri'],
+      readingTime: '9 dakika',
+      viewCount: 2000,
+      likeCount: 180
+    },
+    {
+      id: 6,
+      title: 'Dijital Pazarlama Trendleri 2023',
+      content: '2023 yılında öne çıkan dijital pazarlama trendlerini ve işletmelerin bu trendleri nasıl kullanabileceğini anlatıyoruz.',
+      date: '1 Ağustos 2023',
+      author: 'Elif Yıldız',
+      image: 'https://placehold.co/1200x600/png?text=Dijital+Pazarlama',
+      category: 'Dijital Pazarlama',
+      tags: ['Dijital Pazarlama', 'Sosyal Medya', 'Veri Analitiği'],
+      readingTime: '10 dakika',
+      viewCount: 2200,
+      likeCount: 200
+    },
+    {
+      id: 7,
+      title: 'Endüstri 4.0 ve Üretimde Dijitalleşme',
+      content: 'Endüstri 4.0 kavramını ve bunun üretim süreçlerini nasıl dönüştürdüğünü detaylı bir şekilde inceliyoruz.',
+      date: '15 Ağustos 2023',
+      author: 'Mustafa Aydın',
+      image: 'https://placehold.co/1200x600/png?text=Endüstri+4.0',
+      category: 'Endüstri 4.0',
+      tags: ['Endüstri 4.0', 'Üretim Otomasyonu', 'Veri Analitiği'],
+      readingTime: '11 dakika',
+      viewCount: 2500,
+      likeCount: 220
+    },
+    {
+      id: 8,
+      title: 'Blockchain Teknolojisi ve İş Dünyasındaki Uygulamaları',
+      content: 'Blockchain teknolojisinin temellerini ve iş dünyasında nasıl kullanılabileceğini açıklıyoruz.',
+      date: '1 Eylül 2023',
+      author: 'Emre Kaya',
+      image: 'https://placehold.co/1200x600/png?text=Blockchain',
+      category: 'Blockchain',
+      tags: ['Blockchain', 'Kripto Para', 'İş Dünyası'],
+      readingTime: '12 dakika',
+      viewCount: 2800,
+      likeCount: 250
+    },
+    {
+      id: 9,
+      title: 'Müşteri Deneyiminde Dijital Dönüşüm',
+      content: 'Dijital dönüşümün müşteri deneyimini nasıl etkilediğini ve işletmelerin bunu nasıl avantaja çevirebileceğini anlatıyoruz.',
+      date: '15 Eylül 2023',
+      author: 'Selin Arslan',
+      image: 'https://placehold.co/1200x600/png?text=Müşteri+Deneyimi',
+      category: 'Müşteri Deneyimi',
+      tags: ['Müşteri Deneyimi', 'Dijital Dönüşüm', 'İş Zekası'],
+      readingTime: '13 dakika',
+      viewCount: 3000,
+      likeCount: 280
+    },
+    {
+      id: 10,
+      title: 'Nesnelerin İnterneti (IoT) ve Akıllı Şehirler',
+      content: 'IoT teknolojisinin akıllı şehir uygulamalarında nasıl kullanıldığını ve geleceğin şehirlerini nasıl şekillendirdiğini inceliyoruz.',
+      date: '1 Ekim 2023',
+      author: 'Burak Yılmaz',
+      image: 'https://placehold.co/1200x600/png?text=IoT',
+      category: 'IoT',
+      tags: ['IoT', 'Akıllı Şehirler', 'Veri Analitiği'],
+      readingTime: '14 dakika',
+      viewCount: 3200,
+      likeCount: 300
+    },
+    {
+      id: 11,
+      title: 'Dijital İK: İnsan Kaynakları Yönetiminde Yeni Trendler',
+      content: 'İnsan kaynakları yönetiminde dijital dönüşümün etkilerini ve yeni İK trendlerini ele alıyoruz.',
+      date: '15 Ekim 2023',
+      author: 'Ayşe Demir',
+      image: 'https://placehold.co/1200x600/png?text=Dijital+İK',
+      category: 'İnsan Kaynakları',
+      tags: ['Dijital İK', 'İnsan Kaynakları', 'İş Zekası'],
+      readingTime: '15 dakika',
+      viewCount: 3500,
+      likeCount: 320
+    },
+    {
+      id: 12,
+      title: '5G Teknolojisi ve İş Dünyasına Etkileri',
+      content: '5G teknolojisinin iş dünyasında yaratacağı fırsatları ve potansiyel uygulamaları inceliyoruz.',
+      date: '1 Kasım 2023',
+      author: 'Mehmet Yıldırım',
+      image: 'https://placehold.co/1200x600/png?text=5G+Teknolojisi',
+      category: 'Telekomünikasyon',
+      tags: ['5G', 'Telekomünikasyon', 'İş Dünyası'],
+      readingTime: '16 dakika',
+      viewCount: 3800,
+      likeCount: 350
+    },
+    {
+      id: 13,
+      title: 'Dijital Dönüşümde Liderlik',
+      content: 'Dijital dönüşüm sürecinde liderliğin önemini ve etkili liderlik stratejilerini ele alıyoruz.',
+      date: '15 Kasım 2023',
+      author: 'Zeynep Kaya',
+      image: 'https://placehold.co/1200x600/png?text=Dijital+Liderlik',
+      category: 'Liderlik',
+      tags: ['Dijital Liderlik', 'Liderlik', 'İş Zekası'],
+      readingTime: '17 dakika',
+      viewCount: 4000,
+      likeCount: 380
+    },
+    {
+      id: 14,
+      title: 'Fintech ve Bankacılığın Geleceği',
+      content: 'Fintech uygulamalarının geleneksel bankacılık sektörünü nasıl dönüştürdüğünü ve geleceğin finans dünyasını şekillendirdiğini anlatıyoruz.',
+      date: '1 Aralık 2023',
+      author: 'Ali Yılmaz',
+      image: 'https://placehold.co/1200x600/png?text=Fintech',
+      category: 'Fintech',
+      tags: ['Fintech', 'Bankacılık', 'Gelecek Teknolojileri'],
+      readingTime: '18 dakika',
+      viewCount: 4200,
+      likeCount: 400
+    },
+    {
+      id: 15,
+      title: 'Dijital İkiz Teknolojisi ve Endüstriyel Uygulamaları',
+      content: 'Dijital ikiz teknolojisinin ne olduğunu ve endüstriyel süreçlerde nasıl kullanıldığını inceliyoruz.',
+      date: '15 Aralık 2023',
+      author: 'Canan Öztürk',
+      image: 'https://placehold.co/1200x600/png?text=Dijital+İkiz',
+      category: 'Endüstri 4.0',
+      tags: ['Dijital İkiz', 'Endüstri 4.0', 'Veri Analitiği'],
+      readingTime: '19 dakika',
+      viewCount: 4500,
+      likeCount: 420
+    },
+    {
+      id: 16,
+      title: 'Sürdürülebilir Teknoloji ve Yeşil BT',
+      content: 'Sürdürülebilir teknoloji uygulamalarını ve Yeşil BT kavramını detaylı bir şekilde ele alıyoruz.',
+      date: '1 Ocak 2024',
+      author: 'Ece Demir',
+      image: 'https://placehold.co/1200x600/png?text=Sürdürülebilir+Teknoloji',
+      category: 'Sürdürülebilirlik',
+      tags: ['Sürdürülebilir Teknoloji', 'Yeşil BT', 'Çevre Koruma'],
+      readingTime: '20 dakika',
+      viewCount: 4800,
+      likeCount: 450
+    },
+    {
+      id: 17,
+      title: 'Dijital Dönüşümde Değişim Yönetimi',
+      content: 'Dijital dönüşüm sürecinde değişim yönetiminin önemini ve başarılı değişim stratejilerini inceliyoruz.',
+      date: '15 Ocak 2024',
+      author: 'Serkan Yılmaz',
+      image: 'https://placehold.co/1200x600/png?text=Değişim+Yönetimi',
+      category: 'Yönetim',
+      tags: ['Değişim Yönetimi', 'Yönetim', 'İş Zekası'],
+      readingTime: '21 dakika',
+      viewCount: 5000,
+      likeCount: 480
+    },
+    {
+      id: 18,
+      title: 'Artırılmış Gerçeklik (AR) ve İş Uygulamaları',
+      content: 'Artırılmış gerçeklik teknolojisinin iş dünyasındaki uygulamalarını ve potansiyel faydalarını ele alıyoruz.',
+      date: '1 Şubat 2024',
+      author: 'Emine Yıldız',
+      image: 'https://placehold.co/1200x600/png?text=Artırılmış+Gerçeklik',
+      category: 'Artırılmış Gerçeklik',
+      tags: ['Artırılmış Gerçeklik', 'İş Uygulamaları', 'Teknoloji'],
+      readingTime: '22 dakika',
+      viewCount: 5200,
+      likeCount: 500
+    },
+    {
+      id: 19,
+      title: 'Blokzincir Teknolojisi ve İş Dünyasındaki Uygulamaları',
+      content: 'Blokzincir teknolojisinin iş dünyasındaki uygulamalarını ve potansiyel faydalarını ele alıyoruz.',
+      date: '15 Şubat 2024',
+      author: 'Can Öztürk',
+      image: 'https://placehold.co/1200x600/png?text=Blokzincir+Teknolojisi',
+      category: 'Blokzincir',
+      tags: ['Blokzincir', 'İş Dünyası', 'Teknoloji'],
+      readingTime: '23 dakika',
+      viewCount: 5500,
+      likeCount: 520
+    },
+    {
+      id: 20,
+      title: 'Dijital Pazarlama Stratejileri ve Trendleri',
+      content: 'Dijital pazarlama stratejilerini ve güncel trendleri ele alıyoruz.',
+      date: '1 Mart 2024',
+      author: 'Ayşe Demir',
+      image: 'https://placehold.co/1200x600/png?text=Dijital+Pazarlama+Stratejileri',
+      category: 'Dijital Pazarlama',
+      tags: ['Dijital Pazarlama', 'Stratejiler', 'Trendler'],
+      readingTime: '24 dakika',
+      viewCount: 5800,
+      likeCount: 550
+    }
+  ];
+
+  return blogPosts.map((post, index) => {
+    return {
+      params: { id: post.id.toString() },
+      props: { 
+        post,
+        prevPost: index > 0 ? blogPosts[index - 1] : null,
+        nextPost: index < blogPosts.length - 1 ? blogPosts[index + 1] : null
+      },
+    };
+  });
+}
+
+const { post, prevPost, nextPost } = Astro.props;
+
+const mostReadPosts = [
+  { id: 6, title: 'Endüstri 4.0 ve Dijital Dönüşüm', image: 'https://placehold.co/400x300/png?text=Endüstri+4.0' },
+  { id: 7, title: 'Nesnelerin İnterneti (IoT) ve İş Dünyasına Etkileri', image: 'https://placehold.co/400x300/png?text=IoT' },
+];
+
+const mostFavoritedPosts = [
+  { id: 8, title: 'Dijital Pazarlama Stratejileri', image: 'https://placehold.co/400x300/png?text=Dijital+Pazarlama' },
+  { id: 9, title: 'Blokzincir Teknolojisinin İş Dünyasındaki Uygulamaları', image: 'https://placehold.co/400x300/png?text=Blokzincir' },
+];
+---
+
+<Layout title={`${post.title} | E-Dönüşüm Projesi Blog`}>
+  <Header />
+  <main class="bg-gradient-to-b from-primary-50 to-secondary-50 py-20">
+    <div class="container mx-auto px-4 max-w-7xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Sol Sidebar -->
+        <aside class="lg:col-span-3 order-2 lg:order-1">
+          <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4 text-gray-800">En Çok Okunanlar</h3>
+            {mostReadPosts.map(post => (
+              <a href={`/blog/${post.id}`} class="block mb-4">
+                <img src={post.image} alt={post.title} class="w-full h-32 object-cover rounded-lg mb-2" />
+                <h4 class="text-sm font-semibold text-gray-800 hover:text-primary-600">{post.title}</h4>
+              </a>
+            ))}
+          </div>
+        </aside>
+
+        <!-- Ana İçerik -->
+        <article class="lg:col-span-6 order-1 lg:order-2 bg-white rounded-xl shadow-lg overflow-hidden">
+          <img src={post.image} alt={post.title} class="w-full h-64 object-cover" />
+          <div class="p-8">
+            <div class="flex items-center justify-between mb-4">
+              <span class="bg-primary-100 text-primary-800 text-xs font-semibold px-2.5 py-0.5 rounded">{post.category}</span>
+              <span class="text-gray-500 text-sm">{post.readingTime} okuma süresi</span>
+            </div>
+            <h1 class="text-3xl font-bold mb-4 text-gray-800">{post.title}</h1>
+            <div class="flex items-center text-sm text-gray-500 mb-6">
+              <span>{post.date}</span>
+              <span class="mx-2">•</span>
+              <span>{post.author}</span>
+            </div>
+            <div class="flex items-center space-x-4 mb-6">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 text-gray-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <span class="text-gray-600">{post.viewCount} görüntülenme</span>
+              </div>
+              <div class="flex items-center">
+                <svg class="w-5 h-5 text-red-400 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-600">{post.likeCount} beğeni</span>
+              </div>
+            </div>
+            <div class="prose max-w-none mb-6">
+              <p>{post.content}</p>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-8">
+              {post.tags.map(tag => (
+                <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </article>
+
+        <!-- Sağ Sidebar -->
+        <aside class="lg:col-span-3 order-3">
+          <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4 text-gray-800">En Çok Favorilenenler</h3>
+            {mostFavoritedPosts.map(post => (
+              <a href={`/blog/${post.id}`} class="block mb-4">
+                <img src={post.image} alt={post.title} class="w-full h-32 object-cover rounded-lg mb-2" />
+                <h4 class="text-sm font-semibold text-gray-800 hover:text-primary-600">{post.title}</h4>
+              </a>
+            ))}
+          </div>
+        </aside>
+      </div>
+
+      <!-- Önceki ve Sonraki Yazılar -->
+      <div class="mt-12 flex justify-between">
+        {prevPost && (
+          <a href={`/blog/${prevPost.id}`} class="flex items-center text-primary-600 hover:underline">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            Önceki: {prevPost.title}
+          </a>
+        )}
+        {nextPost && (
+          <a href={`/blog/${nextPost.id}`} class="flex items-center text-primary-600 hover:underline ml-auto">
+            Sonraki: {nextPost.title}
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+          </a>
+        )}
+      </div>
+
+      <div class="mt-8 text-center">
+        <a href="/blog" class="text-primary-600 hover:underline">← Tüm Blog Yazıları</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

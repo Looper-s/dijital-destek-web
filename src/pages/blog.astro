@@ -187,29 +187,26 @@ const allBlogPosts = [
   }
 ];
 
-// Pagination için gerekli değişkenler
-const postsPerPage = 9;
-const totalPages = Math.ceil(allBlogPosts.length / postsPerPage);
-const currentPage = Astro.url.searchParams.get('page') ? parseInt(Astro.url.searchParams.get('page')) : 1;
-const startIndex = (currentPage - 1) * postsPerPage;
-const endIndex = startIndex + postsPerPage;
-const blogPosts = allBlogPosts.slice(startIndex, endIndex);
-
-const categories = [...new Set(allBlogPosts.map(post => post.category))];
-
-// Arama ve filtreleme işlevselliği
+// URL'den arama terimi ve kategori bilgisini al
 const searchTerm = Astro.url.searchParams.get('search') || '';
 const selectedCategories = Astro.url.searchParams.get('categories') ? Astro.url.searchParams.get('categories').split(',') : [];
 
+// Filtreleme işlemi
 const filteredPosts = allBlogPosts.filter(post => {
   const titleMatch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
   const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(post.category);
   return titleMatch && categoryMatch;
 });
 
-const filteredBlogPosts = filteredPosts.slice(startIndex, endIndex);
-const filteredTotalPages = Math.ceil(filteredPosts.length / postsPerPage);
+// Pagination için gerekli değişkenler
+const postsPerPage = 9;
+const currentPage = Astro.url.searchParams.get('page') ? parseInt(Astro.url.searchParams.get('page')) : 1;
+const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+const startIndex = (currentPage - 1) * postsPerPage;
+const endIndex = startIndex + postsPerPage;
+const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
 
+const categories = [...new Set(allBlogPosts.map(post => post.category))];
 ---
 
 <Layout title="Blog | E-Dönüşüm Projesi">
@@ -226,6 +223,7 @@ const filteredTotalPages = Math.ceil(filteredPosts.length / postsPerPage);
           <input 
             type="text" 
             id="search" 
+            name="search"
             placeholder="Blog yazısı ara..." 
             class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500"
             value={searchTerm}
@@ -233,6 +231,7 @@ const filteredTotalPages = Math.ceil(filteredPosts.length / postsPerPage);
         </div>
         <div class="sm:w-1/3 relative">
           <button 
+            type="button"
             id="category-dropdown" 
             class="w-full p-2 rounded-md border border-gray-300 bg-white text-left focus:outline-none focus:ring-2 focus:ring-primary-500 flex justify-between items-center"
           >
@@ -247,6 +246,7 @@ const filteredTotalPages = Math.ceil(filteredPosts.length / postsPerPage);
                 <label class="flex items-center">
                   <input 
                     type="checkbox" 
+                    name="categories"
                     value={category}
                     class="mr-2 focus:ring-2 focus:ring-primary-500"
                     checked={selectedCategories.includes(category)}
@@ -260,7 +260,7 @@ const filteredTotalPages = Math.ceil(filteredPosts.length / postsPerPage);
       </div>
 
       <div id="blog-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-        {filteredBlogPosts.map((post) => (
+        {paginatedPosts.map((post) => (
           <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg" data-category={post.category}>
             <div class="relative">
               <img src={post.image} alt={post.title} class="w-full h-48 object-cover" />
@@ -285,8 +285,8 @@ const filteredTotalPages = Math.ceil(filteredPosts.length / postsPerPage);
       </div>
 
       <!-- Pagination -->
-      <div class="flex justify-center space-x-2">
-        {Array.from({ length: filteredTotalPages }, (_, i) => i + 1).map((pageNum) => (
+      <div id="pagination" class="flex justify-center space-x-2">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
           <a
             href={`/blog?page=${pageNum}&search=${searchTerm}&categories=${selectedCategories.join(',')}`}
             class={`px-4 py-2 rounded-md ${
@@ -305,22 +305,24 @@ const filteredTotalPages = Math.ceil(filteredPosts.length / postsPerPage);
 </Layout>
 
 <script>
+  let debounceTimer;
   const searchInput = document.getElementById('search');
   const categoryDropdown = document.getElementById('category-dropdown');
   const categoryMenu = document.getElementById('category-menu');
-  const categoryCheckboxes = categoryMenu.querySelectorAll('input[type="checkbox"]');
+  const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+  const blogPosts = document.querySelectorAll('#blog-posts > div');
+  const pagination = document.getElementById('pagination');
 
-  categoryDropdown.addEventListener('click', () => {
-    categoryMenu.classList.toggle('hidden');
-  });
-
-  document.addEventListener('click', (event) => {
-    if (!categoryDropdown.contains(event.target) && !categoryMenu.contains(event.target)) {
-      categoryMenu.classList.add('hidden');
+  function debounce(func, delay) {
+    return function() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => func.apply(context, args), delay);
     }
-  });
+  }
 
-  function updateSearch() {
+  function updateURL() {
     const searchTerm = searchInput.value;
     const selectedCategories = Array.from(categoryCheckboxes)
       .filter(checkbox => checkbox.checked)
@@ -330,11 +332,99 @@ const filteredTotalPages = Math.ceil(filteredPosts.length / postsPerPage);
     url.searchParams.set('search', searchTerm);
     url.searchParams.set('categories', selectedCategories.join(','));
     url.searchParams.set('page', '1');
-    window.location.href = url.toString();
+    history.pushState({}, '', url);
+
+    filterPosts();
   }
 
-  searchInput.addEventListener('input', updateSearch);
-  categoryCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', updateSearch);
-  });
+  function filterPosts() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedCategories = Array.from(categoryCheckboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+
+    blogPosts.forEach(post => {
+      const title = post.querySelector('h2').textContent.toLowerCase();
+      const category = post.dataset.category;
+      const matchesSearch = title.includes(searchTerm);
+      const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(category);
+
+      post.style.display = matchesSearch && matchesCategory ? 'block' : 'none';
+    });
+
+    updatePagination();
+  }
+
+  function updatePagination() {
+    const visiblePosts = document.querySelectorAll('#blog-posts > div[style="display: block"]');
+    const totalPages = Math.ceil(visiblePosts.length / 9);
+    
+    pagination.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const pageLink = document.createElement('a');
+      pageLink.href = `#page-${i}`;
+      pageLink.textContent = i;
+      pageLink.classList.add('px-4', 'py-2', 'rounded-md', 'bg-white', 'text-primary-600', 'hover:bg-primary-100');
+      if (i === 1) pageLink.classList.add('bg-primary-600', 'text-white');
+      pageLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showPage(i);
+      });
+      pagination.appendChild(pageLink);
+    }
+
+    showPage(1);
+  }
+
+  function showPage(pageNum) {
+    const visiblePosts = document.querySelectorAll('#blog-posts > div[style="display: block"]');
+    const startIndex = (pageNum - 1) * 9;
+    const endIndex = startIndex + 9;
+
+    visiblePosts.forEach((post, index) => {
+      post.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+    });
+
+    updateActivePage(pageNum);
+  }
+
+  function updateActivePage(pageNum) {
+    const pageLinks = pagination.querySelectorAll('a');
+    pageLinks.forEach((link, index) => {
+      if (index + 1 === pageNum) {
+        link.classList.add('bg-primary-600', 'text-white');
+        link.classList.remove('bg-white', 'text-primary-600');
+      } else {
+        link.classList.remove('bg-primary-600', 'text-white');
+        link.classList.add('bg-white', 'text-primary-600');
+      }
+    });
+  }
+
+  const debouncedUpdateURL = debounce(updateURL, 300);
+
+  if (categoryDropdown && categoryMenu) {
+    categoryDropdown.addEventListener('click', () => {
+      categoryMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!categoryDropdown.contains(event.target) && !categoryMenu.contains(event.target)) {
+        categoryMenu.classList.add('hidden');
+      }
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', debouncedUpdateURL);
+  }
+
+  if (categoryCheckboxes) {
+    categoryCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateURL);
+    });
+  }
+
+  // İlk yüklemede filtreleme ve sayfalama işlemini gerçekleştir
+  filterPosts();
 </script>
