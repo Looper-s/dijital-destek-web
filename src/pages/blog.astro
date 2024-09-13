@@ -189,7 +189,7 @@ const allBlogPosts = [
 
 // URL'den arama terimi ve kategori bilgisini al
 const searchTerm = Astro.url.searchParams.get('search') || '';
-const selectedCategories = Astro.url.searchParams.get('categories') ? Astro.url.searchParams.get('categories').split(',') : [];
+const selectedCategories = Astro.url.searchParams.get('categories') ? Astro.url.searchParams.get('categories')!.split(',') : [];
 
 // Filtreleme işlemi
 const filteredPosts = allBlogPosts.filter(post => {
@@ -200,7 +200,7 @@ const filteredPosts = allBlogPosts.filter(post => {
 
 // Pagination için gerekli değişkenler
 const postsPerPage = 9;
-const currentPage = Astro.url.searchParams.get('page') ? parseInt(Astro.url.searchParams.get('page')) : 1;
+const currentPage = Astro.url.searchParams.get('page') ? parseInt(Astro.url.searchParams.get('page') || '1') : 1;
 const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 const startIndex = (currentPage - 1) * postsPerPage;
 const endIndex = startIndex + postsPerPage;
@@ -305,18 +305,17 @@ const categories = [...new Set(allBlogPosts.map(post => post.category))];
 </Layout>
 
 <script>
-  let debounceTimer;
-  const searchInput = document.getElementById('search');
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  const searchInput = document.getElementById('search') as HTMLInputElement;
   const categoryDropdown = document.getElementById('category-dropdown');
   const categoryMenu = document.getElementById('category-menu');
-  const categoryCheckboxes = document.querySelectorAll('input[name="categories"]');
+  const categoryCheckboxes = document.querySelectorAll('input[name="categories"]') as NodeListOf<HTMLInputElement>;
   const blogPosts = document.querySelectorAll('#blog-posts > div');
   const pagination = document.getElementById('pagination');
 
-  function debounce(func, delay) {
-    return function() {
+  function debounce(func: Function, delay: number) {
+    return function(this: any, ...args: any[]) {
       const context = this;
-      const args = arguments;
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => func.apply(context, args), delay);
     }
@@ -328,7 +327,7 @@ const categories = [...new Set(allBlogPosts.map(post => post.category))];
       .filter(checkbox => checkbox.checked)
       .map(checkbox => checkbox.value);
     
-    const url = new URL(window.location);
+    const url = new URL(window.location.href);
     url.searchParams.set('search', searchTerm);
     url.searchParams.set('categories', selectedCategories.join(','));
     url.searchParams.set('page', '1');
@@ -343,13 +342,13 @@ const categories = [...new Set(allBlogPosts.map(post => post.category))];
       .filter(checkbox => checkbox.checked)
       .map(checkbox => checkbox.value);
 
-    blogPosts.forEach(post => {
-      const title = post.querySelector('h2').textContent.toLowerCase();
-      const category = post.dataset.category;
+    blogPosts.forEach((post) => {
+      const title = post.querySelector('h2')?.textContent?.toLowerCase() || '';
+      const category = (post as HTMLElement).dataset.category || '';
       const matchesSearch = title.includes(searchTerm);
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(category);
 
-      post.style.display = matchesSearch && matchesCategory ? 'block' : 'none';
+      (post as HTMLElement).style.display = matchesSearch && matchesCategory ? 'block' : 'none';
     });
 
     updatePagination();
@@ -359,46 +358,50 @@ const categories = [...new Set(allBlogPosts.map(post => post.category))];
     const visiblePosts = document.querySelectorAll('#blog-posts > div[style="display: block"]');
     const totalPages = Math.ceil(visiblePosts.length / 9);
     
-    pagination.innerHTML = '';
-    for (let i = 1; i <= totalPages; i++) {
-      const pageLink = document.createElement('a');
-      pageLink.href = `#page-${i}`;
-      pageLink.textContent = i;
-      pageLink.classList.add('px-4', 'py-2', 'rounded-md', 'bg-white', 'text-primary-600', 'hover:bg-primary-100');
-      if (i === 1) pageLink.classList.add('bg-primary-600', 'text-white');
-      pageLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        showPage(i);
-      });
-      pagination.appendChild(pageLink);
+    if (pagination) {
+      pagination.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = `#page-${i}`;
+        pageLink.textContent = i.toString();
+        pageLink.classList.add('px-4', 'py-2', 'rounded-md', 'bg-white', 'text-primary-600', 'hover:bg-primary-100');
+        if (i === 1) pageLink.classList.add('bg-primary-600', 'text-white');
+        pageLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          showPage(i);
+        });
+        pagination.appendChild(pageLink);
+      }
     }
 
     showPage(1);
   }
 
-  function showPage(pageNum) {
+  function showPage(pageNum: number) {
     const visiblePosts = document.querySelectorAll('#blog-posts > div[style="display: block"]');
     const startIndex = (pageNum - 1) * 9;
     const endIndex = startIndex + 9;
 
     visiblePosts.forEach((post, index) => {
-      post.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+      (post as HTMLElement).style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
     });
 
     updateActivePage(pageNum);
   }
 
-  function updateActivePage(pageNum) {
-    const pageLinks = pagination.querySelectorAll('a');
-    pageLinks.forEach((link, index) => {
-      if (index + 1 === pageNum) {
-        link.classList.add('bg-primary-600', 'text-white');
-        link.classList.remove('bg-white', 'text-primary-600');
-      } else {
-        link.classList.remove('bg-primary-600', 'text-white');
-        link.classList.add('bg-white', 'text-primary-600');
-      }
-    });
+  function updateActivePage(pageNum: number) {
+    if (pagination) {
+      const pageLinks = pagination.querySelectorAll('a');
+      pageLinks.forEach((link, index) => {
+        if (index + 1 === pageNum) {
+          link.classList.add('bg-primary-600', 'text-white');
+          link.classList.remove('bg-white', 'text-primary-600');
+        } else {
+          link.classList.remove('bg-primary-600', 'text-white');
+          link.classList.add('bg-white', 'text-primary-600');
+        }
+      });
+    }
   }
 
   const debouncedUpdateURL = debounce(updateURL, 300);
@@ -408,8 +411,8 @@ const categories = [...new Set(allBlogPosts.map(post => post.category))];
       categoryMenu.classList.toggle('hidden');
     });
 
-    document.addEventListener('click', (event) => {
-      if (!categoryDropdown.contains(event.target) && !categoryMenu.contains(event.target)) {
+    document.addEventListener('click', (event: MouseEvent) => {
+      if (!categoryDropdown.contains(event.target as Node) && !categoryMenu.contains(event.target as Node)) {
         categoryMenu.classList.add('hidden');
       }
     });

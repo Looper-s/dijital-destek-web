@@ -114,11 +114,11 @@ const currentLanguage = 'tr';
       languageMenu.classList.toggle('hidden');
     });
 
-    document.addEventListener('click', (event) => {
-      if (!languageDropdown.contains(event.target) && !languageMenu.contains(event.target)) {
-        languageMenu.classList.add('hidden');
-      }
-    });
+    document.addEventListener('click', (event: MouseEvent) => {
+			if (!languageDropdown.contains(event.target as Node) && !languageMenu.contains(event.target as Node)) {
+				languageMenu.classList.add('hidden');
+			}
+		});
   }
 
   if (mobileMenuButton && mobileMenu) {

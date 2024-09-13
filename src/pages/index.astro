@@ -209,17 +209,17 @@ const topBlogPosts = [
 </Layout>
 
 <script>
-  function toggleFAQ(index) {
+  function toggleFAQ(index: number) {
     const answer = document.getElementById(`faq-answer-${index}`);
-    const button = answer.previousElementSibling;
+    const button = answer?.previousElementSibling as HTMLElement;
     const icon = button.querySelector('svg');
+
+    answer?.classList.toggle('hidden');
     
-    answer.classList.toggle('hidden');
-    
-    if (answer.classList.contains('hidden')) {
-      icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>';
+    if (answer?.classList.contains('hidden')) {
+      icon!.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>';
     } else {
-      icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path>';
+      icon!.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path>';
     }
   }
 
@@ -228,7 +228,9 @@ const topBlogPosts = [
     faqButtons.forEach((button) => {
       button.addEventListener('click', () => {
         const index = button.getAttribute('data-faq-index');
-        toggleFAQ(index);
+        if (index !== null) {
+          toggleFAQ(parseInt(index));
+        }
       });
     });
   }
