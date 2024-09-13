@@ -1,11 +1,11 @@
 ---
 const navItems = [
-  { href: `/`, text: 'Ana Sayfa' },
-  { href: `/hizmetler`, text: 'Hizmetler' },
-  { href: `/blog`, text: 'Blog' },
-  { href: `/pricing`, text: 'Fiyatlandırma' },
-  { href: `/hakkimizda`, text: 'Hakkımızda' },
-  { href: `/iletisim`, text: 'İletişim' },
+  { href: `/dijital-destek-web`, text: 'Ana Sayfa' },
+  { href: `/dijital-destek-web/hizmetler`, text: 'Hizmetler' },
+  { href: `/dijital-destek-web/blog`, text: 'Blog' },
+  { href: `/dijital-destek-web/pricing`, text: 'Fiyatlandırma' },
+  { href: `/dijital-destek-web/hakkimizda`, text: 'Hakkımızda' },
+  { href: `/dijital-destek-web/iletisim`, text: 'İletişim' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -54,7 +54,7 @@ const currentLanguage = 'tr';
           <div id="language-menu" class="absolute right-0 mt-2 py-2 w-32 bg-white rounded-md shadow-xl z-20 hidden">
             {languages.map((lang) => (
               <a
-                href={`/${lang.code}${currentPath}`}
+                href={`/${currentPath}`}
                 class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600"
               >
                 <span class="mr-2 text-lg">{lang.flag}</span>
