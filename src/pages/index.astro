@@ -1,0 +1,163 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import CustomerStory from '../components/CustomerStory.astro';
+
+const features = [
+  { title: 'Verimlilik Artışı', description: 'İş süreçlerinizi optimize ederek verimliliği artırın.', icon: 'chart-line' },
+  { title: 'Maliyet Tasarrufu', description: 'Dijital çözümlerle operasyonel maliyetlerinizi düşürün.', icon: 'piggy-bank' },
+  { title: 'Müşteri Memnuniyeti', description: 'Gelişmiş hizmetlerle müşteri deneyimini iyileştirin.', icon: 'smile' },
+  { title: 'Veri Analitiği', description: 'Veriye dayalı kararlar alarak işletmenizi ileriye taşıyın.', icon: 'chart-bar' },
+  { title: 'Bulut Entegrasyonu', description: 'Bulut teknolojileri ile esneklik ve ölçeklenebilirlik kazanın.', icon: 'cloud' },
+  { title: 'Siber Güvenlik', description: 'Dijital varlıklarınızı en üst düzeyde koruyun.', icon: 'shield-check' },
+];
+
+const customerStories = [
+  { name: 'ABC Şirketi', story: 'E-dönüşüm projesi sayesinde verimliliğimizi %30 artırdık.', image: '/images/customer1.jpg' },
+  { name: 'XYZ Firması', story: 'Müşteri memnuniyetimiz %25 yükseldi.', image: '/images/customer2.jpg' },
+  { name: '123 Holding', story: 'Operasyonel maliyetlerimizi %20 azalttık.', image: '/images/customer3.jpg' },
+];
+
+const stats = [
+  { value: '500+', label: 'Başarılı Proje' },
+  { value: '98%', label: 'Müşteri Memnuniyeti' },
+  { value: '50M TL', label: 'Tasarruf Sağlandı' },
+  { value: '10+', label: 'Yıllık Deneyim' },
+];
+
+const faqs = [
+  {
+    question: "E-dönüşüm nedir?",
+    answer: "E-dönüşüm, işletmelerin dijital teknolojileri kullanarak iş süreçlerini, müşteri deneyimini ve iş modellerini modernize etme sürecidir."
+  },
+  {
+    question: "E-dönüşüm projesi ne kadar sürer?",
+    answer: "Proje süresi işletmenizin büyüklüğüne ve ihtiyaçlarına göre değişir. Genellikle 3 ay ile 1 yıl arasında tamamlanır."
+  },
+  {
+    question: "E-dönüşümün faydaları nelerdir?",
+    answer: "Verimlilik artışı, maliyet tasarrufu, müşteri memnuniyetinde artış, daha iyi veri analizi ve karar verme süreçleri e-dönüşümün başlıca faydalarıdır."
+  },
+  {
+    question: "Hangi sektörler e-dönüşümden faydalanabilir?",
+    answer: "Hemen hemen tüm sektörler e-dönüşümden faydalanabilir. Perakende, üretim, finans, sağlık ve eğitim başlıca örneklerdir."
+  }
+];
+---
+
+<Layout title="E-Dönüşüm Projesi">
+	<Header />
+	<main class="bg-gray-50">
+		<section class="py-20 sm:py-32 bg-gradient-to-br from-primary-100 via-secondary-100 to-primary-50">
+			<div class="container mx-auto px-4 max-w-6xl text-center">
+				<h1 class="text-4xl sm:text-5xl font-bold mb-6 text-gray-800">
+					E-Dönüşüm ile 
+					<span class="font-future text-primary-600 text-5xl sm:text-6xl mt-2">Geleceğe</span> 
+				<br />
+					Adım Atın
+				</h1>
+				<p class="mb-8 text-xl text-gray-700 max-w-2xl mx-auto">İşletmenizin dijital dönüşümünü destekleyerek, verimliliği artırıyor ve rekabet gücünüzü yükseltiyoruz.</p>
+				<div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+					<a href="/hakkimizda" class="bg-primary-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 hover:bg-primary-700">
+						Daha Fazla Bilgi
+					</a>
+					<a href="/iletisim" class="bg-white text-primary-600 font-bold py-3 px-8 rounded-full transition duration-300 border-2 border-primary-600 hover:bg-primary-50">
+						İletişime Geçin
+					</a>
+				</div>
+			</div>
+		</section>
+		
+		<section class="py-20 bg-white">
+			<div class="container mx-auto px-4 max-w-6xl">
+				<h2 class="text-3xl font-bold mb-12 text-center text-gray-800">Öne Çıkan Özellikler</h2>
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{features.map((feature) => (
+						<FeatureCard title={feature.title} description={feature.description} icon={feature.icon} />
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="py-20 bg-primary-50">
+			<div class="container mx-auto px-4 max-w-6xl">
+				<h2 class="text-3xl font-bold mb-12 text-center text-gray-800">Rakamlarla E-Dönüşüm</h2>
+				<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+					{stats.map((stat) => (
+						<div class="text-center">
+							<p class="text-4xl font-bold mb-2 text-primary-600">{stat.value}</p>
+							<p class="text-lg text-gray-600">{stat.label}</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="py-20 bg-white">
+			<div class="container mx-auto px-4 max-w-6xl">
+				<h2 class="text-3xl font-bold mb-12 text-center text-gray-800">Müşteri Hikayeleri</h2>
+				<div class="grid md:grid-cols-3 gap-8">
+					{customerStories.map((story) => (
+						<CustomerStory name={story.name} story={story.story} image={story.image} />
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="py-20 bg-gray-50">
+			<div class="container mx-auto px-4 max-w-3xl">
+				<h2 class="text-3xl font-bold mb-12 text-center text-gray-800">Sıkça Sorulan Sorular</h2>
+				<div class="space-y-6">
+					{faqs.map((faq, index) => (
+						<div class="bg-white rounded-lg shadow-md overflow-hidden">
+							<button
+								class="flex justify-between items-center w-full p-6 text-left focus:outline-none"
+								onclick={`document.getElementById('faq-answer-${index}').classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180');`}
+							>
+								<span class="text-lg font-semibold text-gray-800">{faq.question}</span>
+								<svg class="w-6 h-6 text-primary-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+								</svg>
+							</button>
+							<div id={`faq-answer-${index}`} class="hidden">
+								<p class="px-6 pb-6 text-gray-600">{faq.answer}</p>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="py-20 bg-primary-600 text-white">
+			<div class="container mx-auto px-4 max-w-4xl text-center">
+				<h2 class="text-3xl font-bold mb-8">E-Dönüşüm Yolculuğunuza Başlayın</h2>
+				<p class="mb-8 text-xl max-w-2xl mx-auto">Dijital dönüşüm uzmanlarımız, işletmeniz için özel çözümler sunmaya hazır.</p>
+				<a href="/iletisim" class="bg-white text-primary-600 font-bold py-3 px-8 rounded-full transition duration-300 hover:bg-gray-100 inline-block">
+					Ücretsiz Danışmanlık Alın
+				</a>
+			</div>
+		</section>
+	</main>
+	<Footer />
+</Layout>
+
+<script>
+	document.addEventListener('astro:page-load', () => {
+		const faqButtons = document.querySelectorAll('[id^="faq-answer-"]');
+		faqButtons.forEach((button) => {
+			button.addEventListener('click', (event) => {
+				const answer = event.currentTarget.nextElementSibling;
+				answer.classList.toggle('hidden');
+				const icon = event.currentTarget.querySelector('svg');
+				icon.classList.toggle('rotate-180');
+			});
+		});
+	});
+</script>
+
+<!-- Orbitron fontunu ekleyin -->
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+</style>

@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const ekipUyeleri = [
+  { isim: 'Ahmet Yılmaz', pozisyon: 'CEO', foto: '/images/team/ahmet.jpg' },
+  { isim: 'Ayşe Kaya', pozisyon: 'CTO', foto: '/images/team/ayse.jpg' },
+  { isim: 'Mehmet Demir', pozisyon: 'Proje Yöneticisi', foto: '/images/team/mehmet.jpg' },
+  { isim: 'Zeynep Ak', pozisyon: 'Veri Analisti', foto: '/images/team/zeynep.jpg' },
+];
+
+const basarilar = [
+  { yil: '2020', baslik: 'En İyi E-Dönüşüm Projesi Ödülü' },
+  { yil: '2021', baslik: 'Teknoloji Liderliği Ödülü' },
+  { yil: '2022', baslik: '500+ Başarılı Proje' },
+  { yil: '2023', baslik: 'Yılın Dijital Dönüşüm Şirketi' },
+];
+---
+
+<Layout title="Hakkımızda | E-Dönüşüm Projesi">
+  <Header />
+  <main class="bg-gradient-to-b from-primary-50 to-secondary-50 py-20">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-8 text-center text-gray-800">
+        E-Dönüşüm Projemiz 
+        <span class="font-future text-primary-600 block mt-2">Hakkında</span>
+      </h1>
+      <div class="bg-white p-8 rounded-2xl shadow-lg mb-12">
+        <p class="mb-6 text-gray-600 leading-relaxed">E-Dönüşüm projemiz, işletmelerin dijital çağa ayak uydurmasını sağlamak amacıyla tasarlanmıştır. Amacımız, şirketlerin teknolojik altyapılarını güçlendirerek rekabet güçlerini artırmak ve operasyonel verimliliği en üst düzeye çıkarmaktır.</p>
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Neden E-Dönüşüm?</h2>
+        <ul class="list-disc list-inside mb-6 text-gray-600 space-y-2">
+          <li>Dijital teknolojilerin iş süreçlerine entegrasyonu</li>
+          <li>Veri odaklı karar verme mekanizmalarının oluşturulması</li>
+          <li>Müşteri deneyiminin iyileştirilmesi</li>
+          <li>İş modellerinin modernizasyonu</li>
+        </ul>
+        <p class="text-gray-600">Projemiz, her işletmenin kendine özgü ihtiyaçlarını göz önünde bulundurarak özelleştirilmiş çözümler sunmaktadır.</p>
+      </div>
+
+      <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Ekibimiz</h2>
+      <div class="grid md:grid-cols-4 gap-8 mb-12">
+        {ekipUyeleri.map((uye) => (
+          <div class="bg-white p-6 rounded-xl shadow-md text-center">
+            <img src={uye.foto} alt={uye.isim} class="w-32 h-32 rounded-full mx-auto mb-4 object-cover" />
+            <h3 class="text-xl font-semibold text-gray-800">{uye.isim}</h3>
+            <p class="text-primary-600">{uye.pozisyon}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Başarılarımız</h2>
+      <div class="grid md:grid-cols-4 gap-8">
+        {basarilar.map((basari) => (
+          <div class="bg-white p-6 rounded-xl shadow-md text-center">
+            <p class="text-4xl font-bold text-primary-600 mb-2">{basari.yil}</p>
+            <p class="text-gray-800">{basari.baslik}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+</style>
