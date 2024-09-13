@@ -1,47 +1,78 @@
-# Astro Starter Kit: Minimal
+# Dijital Destek Projesi
 
-```sh
-npm create astro@latest -- --template minimal
+Bu proje, Dijital Destek adlı bir dijital dönüşüm danışmanlık şirketinin web sitesini içerir. Astro ve Tailwind CSS kullanılarak geliştirilmiştir.
+
+## Gereksinimler
+
+- Node.js (v14.0.0 veya üzeri)
+- npm (v6.0.0 veya üzeri)
+
+## Kurulum
+
+1. Projeyi klonlayın:
+   ```
+   git clone https://github.com/kullanici-adi/dijital-destek-projesi.git
+   cd dijital-destek-projesi
+   ```
+
+2. Bağımlılıkları yükleyin:
+   ```
+   npm install
+   ```
+
+## Geliştirme Ortamında Çalıştırma
+
+Projeyi geliştirme modunda çalıştırmak için:
+
+```
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+Bu komut, projenizi geliştirme modunda çalıştırır. Tarayıcınızda `http://localhost:3000` adresine gidilerek projeyi görüntüleyebilirsiniz.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Production için Derleme
 
-## 🚀 Project Structure
+Projeyi production için derlemek için:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+npm run build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Bu komut, projenizi production için derler. Derlenmiş dosyalar `dist` klasörüne yerleştirilir.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Production Ortamında Çalıştırma
 
-Any static assets, like images, can be placed in the `public/` directory.
+Derlenmiş projeyi önizlemek için:
 
-## 🧞 Commands
+```
+npm run preview
+```
+Bu komut, derlenmiş projeyi `http://localhost:5000` adresinde çalıştıracaktır.
 
-All commands are run from the root of the project, from a terminal:
+## Deployment
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Bu proje, statik site olarak derlendiği için herhangi bir statik site hosting hizmetine (örneğin Netlify, Vercel, GitHub Pages) kolayca deploy edilebilir.
 
-## 👀 Want to learn more?
+1. `npm run build` komutunu çalıştırın.
+2. Oluşturulan `dist/` klasörünü tercih ettiğiniz hosting hizmetine yükleyin.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Proje Yapısı
+
+- `src/`: Kaynak kodları
+  - `components/`: Yeniden kullanılabilir bileşenler
+  - `layouts/`: Sayfa düzenleri
+  - `pages/`: Sayfalar
+- `public/`: Statik dosyalar
+- `astro.config.mjs`: Astro yapılandırma dosyası
+- `tailwind.config.cjs`: Tailwind CSS yapılandırma dosyası
+
+## Özelleştirme
+
+- Renk şemasını değiştirmek için `tailwind.config.cjs` dosyasını düzenleyin.
+- Yeni sayfalar eklemek için `src/pages/` klasörüne yeni `.astro` dosyaları ekleyin.
+- Mevcut bileşenleri düzenlemek veya yeni bileşenler eklemek için `src/components/` klasörünü kullanın.
+
+## Lisans
+
+Bu proje [MIT lisansı](LICENSE) altında lisanslanmıştır.
+
