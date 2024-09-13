@@ -3,6 +3,25 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
+// Başlığı kebab-case'e çeviren yardımcı fonksiyon
+function slugify(title: string): string {
+    return title
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/Ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/Ş/g, 's')
+    .replace(/ı/g, 'i')
+    .replace(/İ/g, 'i')
+    .replace(/ö/g, 'o')
+    .replace(/Ö/g, 'o')
+    .replace(/ç/g, 'c')
+    .replace(/Ç/g, 'c')
+    .replace(/ /g, '-')
+    .replace(/[^a-zA-Z0-9-]/g, '')
+    .toLowerCase();
+}
+
 // Toplam 20 blog yazısı
 const allBlogPosts = [
   {
@@ -207,6 +226,7 @@ const endIndex = startIndex + postsPerPage;
 const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
 
 const categories = [...new Set(allBlogPosts.map(post => post.category))];
+
 ---
 
 <Layout title="Blog | Dijital Destek">
@@ -278,7 +298,7 @@ const categories = [...new Set(allBlogPosts.map(post => post.category))];
                 <span>{post.date}</span>
                 <span>{post.author}</span>
               </div>
-              <a href={`/blog/${post.id}`} class="mt-4 inline-block text-primary-600 hover:text-primary-700 transition duration-300">Devamını Oku →</a>
+              <a href={`/dijital-destek-web/blog/${slugify(post.title)}`} class="mt-4 inline-block text-primary-600 hover:text-primary-700 transition duration-300">Devamını Oku →</a>
             </div>
           </div>
         ))}
@@ -288,7 +308,7 @@ const categories = [...new Set(allBlogPosts.map(post => post.category))];
       <div id="pagination" class="flex justify-center space-x-2">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
           <a
-            href={`/blog?page=${pageNum}&search=${searchTerm}&categories=${selectedCategories.join(',')}`}
+            href={`/dijital-destek-web/blog?page=${pageNum}&search=${searchTerm}&categories=${selectedCategories.join(',')}`}
             class={`px-4 py-2 rounded-md ${
               currentPage === pageNum
                 ? 'bg-primary-600 text-white'

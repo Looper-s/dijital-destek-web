@@ -1,11 +1,11 @@
 ---
 const navItems = [
-  { href: `/`, text: 'Ana Sayfa' },
-  { href: `/hizmetler`, text: 'Hizmetler' },
-  { href: `/blog`, text: 'Blog' },
-  { href: `/pricing`, text: 'Fiyatlandırma' },
-  { href: `/hakkimizda`, text: 'Hakkımızda' },
-  { href: `/iletisim`, text: 'İletişim' },
+  { href: `/dijital-destek-web`, text: 'Ana Sayfa' },
+  { href: `/dijital-destek-web/hizmetler`, text: 'Hizmetler' },
+  { href: `/dijital-destek-web/blog`, text: 'Blog' },
+  { href: `/dijital-destek-web/fiyatlandirma`, text: 'Fiyatlandırma' },
+  { href: `/dijital-destek-web/hakkimizda`, text: 'Hakkımızda' },
+  { href: `/dijital-destek-web/iletisim`, text: 'İletişim' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -28,7 +28,7 @@ const currentLanguage = 'tr';
   </div>
   <div class="container mx-auto px-4">
     <nav class="flex justify-between items-center py-2 sm:py-4">
-      <a href="/" class="text-xl sm:text-2xl font-bold text-primary-600 hover:text-primary-700 transition duration-300">
+      <a href="/dijital-destek-web/" class="text-xl sm:text-2xl font-bold text-primary-600 hover:text-primary-700 transition duration-300">
         Dijital Destek
       </a>
       <div class="hidden md:flex items-center space-x-1">
@@ -54,7 +54,7 @@ const currentLanguage = 'tr';
           <div id="language-menu" class="absolute right-0 mt-2 py-2 w-32 bg-white rounded-md shadow-xl z-20 hidden">
             {languages.map((lang) => (
               <a
-                href={`/${lang.code}${currentPath}`}
+                href={`/dijital-destek-web/${currentPath}`}
                 class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600"
               >
                 <span class="mr-2 text-lg">{lang.flag}</span>
@@ -91,7 +91,7 @@ const currentLanguage = 'tr';
         <p class="text-sm font-medium text-gray-600 mb-2">Dil Seçimi</p>
         {languages.map((lang) => (
           <a
-            href={`/${lang.code}${currentPath}`}
+            href={`/dijital-destek-web/${lang.code}${currentPath}`}
             class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-primary-50 hover:text-primary-600"
           >
             <span class="mr-2 text-lg">{lang.flag}</span>

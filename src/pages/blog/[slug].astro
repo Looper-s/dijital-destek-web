@@ -4,6 +4,24 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
 export async function getStaticPaths() {
+  // Başlığı kebab-case'e çeviren yardımcı fonksiyon
+  function slugify(title: string): string {
+    return title
+      .replace(/ğ/g, 'g')
+      .replace(/ü/g, 'u')
+      .replace(/Ü/g, 'u')
+      .replace(/ş/g, 's')
+      .replace(/Ş/g, 's')
+      .replace(/ı/g, 'i')
+      .replace(/İ/g, 'i')
+      .replace(/ö/g, 'o')
+      .replace(/Ö/g, 'o')
+      .replace(/ç/g, 'c')
+      .replace(/Ç/g, 'c')
+      .replace(/ /g, '-')
+      .toLowerCase();
+  }
+
   const blogPosts = [
     {
       id: 1,
@@ -269,17 +287,36 @@ export async function getStaticPaths() {
 
   return blogPosts.map((post, index) => {
     return {
-      params: { id: post.id.toString() },
+      params: { slug: slugify(post.title) },
       props: { 
         post,
         prevPost: index > 0 ? blogPosts[index - 1] : null,
-        nextPost: index < blogPosts.length - 1 ? blogPosts[index + 1] : null,
+        nextPost: index < blogPosts.length - 1 ? blogPosts[index + 1] : null
       },
     };
   });
 }
 
 const { post, prevPost, nextPost } = Astro.props;
+
+// Başlığı kebab-case'e çeviren yardımcı fonksiyon (bileşen içinde kullanmak için)
+function slugify(title: string): string {
+  return title
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/Ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/Ş/g, 's')
+    .replace(/ı/g, 'i')
+    .replace(/İ/g, 'i')
+    .replace(/ö/g, 'o')
+    .replace(/Ö/g, 'o')
+    .replace(/ç/g, 'c')
+    .replace(/Ç/g, 'c')
+    .replace(/ /g, '-')
+    .replace(/[^a-zA-Z0-9-]/g, '')
+    .toLowerCase();
+}
 
 const mostReadPosts = [
   { id: 6, title: 'Endüstri 4.0 ve Dijital Dönüşüm', image: 'https://placehold.co/400x300/png?text=Endüstri+4.0' },
@@ -318,7 +355,8 @@ const emojis = [
           ))}
         </div>
       </div>
-  <!-- Emoji Bar -->
+      <!-- Emoji Bar -->
+
       <article class="bg-white rounded-xl shadow-lg overflow-hidden">
         <img src={post.image} alt={post.title} class="w-full h-64 sm:h-96 object-cover" />
         <div class="p-6 sm:p-10">
@@ -361,13 +399,13 @@ const emojis = [
       <!-- Önceki ve Sonraki Yazılar -->
       <div class="mt-12 flex flex-col sm:flex-row justify-between">
         {prevPost && (
-          <a href={`/dijital-destek-web/blog/${prevPost.id}`} class="flex items-center text-primary-600 hover:underline mb-4 sm:mb-0">
+          <a href={`/dijital-destek-web/blog/${slugify(prevPost.title)}`} class="flex items-center text-primary-600 hover:underline mb-4 sm:mb-0">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             Önceki: {prevPost.title}
           </a>
         )}
         {nextPost && (
-          <a href={`/dijital-destek-web/blog/${nextPost.id}`} class="flex items-center text-primary-600 hover:underline sm:ml-auto">
+          <a href={`/dijital-destek-web/blog/${slugify(nextPost.title)}`} class="flex items-center text-primary-600 hover:underline sm:ml-auto">
             Sonraki: {nextPost.title}
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </a>
@@ -379,7 +417,7 @@ const emojis = [
         <h2 class="text-3xl font-bold mb-8 text-gray-800">İlgili Yazılar</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[...mostReadPosts, ...mostFavoritedPosts].slice(0, 3).map(post => (
-            <a href={`/dijital-destek-web/blog/${post.id}`} class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+            <a href={`/dijital-destek-web/blog/${slugify(post.title)}`} class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
               <img src={post.image} alt={post.title} class="w-full h-48 object-cover" />
               <div class="p-6">
                 <h3 class="text-xl font-semibold mb-2 text-gray-800 hover:text-primary-600">{post.title}</h3>
