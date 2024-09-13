@@ -9,7 +9,7 @@ const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -18,7 +18,13 @@ const { title } = Astro.props;
 			<title>{title}</title>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 	</head>
-	<body class="font-sans">
-		<slot />
+	<body>
+		<div class="flex flex-col min-h-screen pt-16"> <!-- pt-16 eklendi -->
+			<slot />
+		</div>
 	</body>
 </html>
+
+<style is:global>
+	/* ... mevcut global stiller */
+</style>

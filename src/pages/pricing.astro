@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pricingPlans = [
+  {
+    name: "Başlangıç",
+    price: "499",
+    period: "ay",
+    features: [
+      "Temel dijital dönüşüm danışmanlığı",
+      "Aylık 5 saat destek",
+      "Basit süreç otomasyonu",
+      "E-posta desteği"
+    ],
+    cta: "Başla",
+    recommended: false
+  },
+  {
+    name: "Profesyonel",
+    price: "999",
+    period: "ay",
+    features: [
+      "Gelişmiş dijital dönüşüm stratejisi",
+      "Aylık 15 saat destek",
+      "Kapsamlı süreç otomasyonu",
+      "Veri analitiği desteği",
+      "7/24 telefon ve e-posta desteği"
+    ],
+    cta: "Şimdi Katıl",
+    recommended: true,
+    savings: "20% tasarruf",
+    extraFeature: "30 günlük ücretsiz deneme"
+  },
+  {
+    name: "Kurumsal",
+    price: "Özel Fiyat",
+    period: "",
+    features: [
+      "Özelleştirilmiş dijital dönüşüm planı",
+      "Sınırsız destek",
+      "Tam kapsamlı süreç otomasyonu",
+      "İleri düzey veri analitiği",
+      "Özel proje yöneticisi",
+      "24/7 öncelikli destek"
+    ],
+    cta: "Bize Ulaşın",
+    recommended: false
+  }
+];
+
+---
+
+<Layout title="Fiyatlandırma | Dijital Destek">
+  <Header />
+  <main class="bg-gradient-to-b from-primary-50 to-secondary-50 py-20 pt-32">
+    <div class="container mx-auto px-4 max-w-6xl">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-8 text-center text-gray-800">
+        Fiyatlandırma Planları
+      </h1>
+      <p class="text-xl text-center text-gray-600 mb-12">
+        İşletmenizin ihtiyaçlarına uygun planı seçin ve dijital dönüşüm yolculuğunuza başlayın.
+      </p>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        {pricingPlans.map((plan) => (
+          <div class={`bg-white rounded-2xl shadow-xl overflow-hidden transform transition duration-500 hover:scale-105 ${plan.recommended ? 'border-4 border-primary-500 md:-mt-4 md:mb-4' : ''}`}>
+            {plan.recommended && (
+              <div class="bg-primary-600 text-white text-center py-2 font-bold text-sm uppercase tracking-wide">
+                Önerilen Plan
+              </div>
+            )}
+            <div class="p-8">
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">{plan.name}</h3>
+              <p class="text-4xl font-bold text-primary-600 mb-6">
+                {plan.price === "Özel Fiyat" ? plan.price : `₺${plan.price}`}
+                {plan.period && <span class="text-lg text-gray-500 font-normal">/{plan.period}</span>}
+              </p>
+              {plan.savings && (
+                <p class="text-green-600 font-semibold mb-4">{plan.savings}</p>
+              )}
+              <ul class="mb-8 space-y-3">
+                {plan.features.map((feature) => (
+                  <li class="flex items-center">
+                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span class="text-gray-600">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              {plan.extraFeature && (
+                <p class="text-primary-600 font-semibold mb-6">{plan.extraFeature}</p>
+              )}
+              <button class={`w-full py-3 px-4 rounded-full font-bold text-white ${plan.recommended ? 'bg-primary-600 hover:bg-primary-700' : 'bg-gray-600 hover:bg-gray-700'} transition duration-300`}>
+                {plan.cta}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <div class="mt-16 text-center">
+        <h2 class="text-3xl font-bold mb-4 text-gray-800">Hala emin değil misiniz?</h2>
+        <p class="text-xl text-gray-600 mb-8">
+          Uzmanlarımız size en uygun planı seçmenizde yardımcı olabilir.
+        </p>
+        <a href="/iletisim" class="bg-primary-600 text-white font-bold py-3 px-8 rounded-full hover:bg-primary-700 transition duration-300 inline-block">
+          Bize Ulaşın
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

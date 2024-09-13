@@ -292,9 +292,9 @@ const mostFavoritedPosts = [
 ];
 ---
 
-<Layout title={`${post.title} | E-Dönüşüm Projesi Blog`}>
+<Layout title={`${post.title} | Dijital Destek Blog`}>
   <Header />
-  <main class="bg-gradient-to-b from-primary-50 to-secondary-50 py-20">
+  <main class="bg-gradient-to-b from-primary-50 to-secondary-50 py-12 sm:py-20 pt-20 sm:pt-32">
     <div class="container mx-auto px-4 max-w-7xl">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <!-- Sol Sidebar -->
@@ -312,8 +312,8 @@ const mostFavoritedPosts = [
 
         <!-- Ana İçerik -->
         <article class="lg:col-span-6 order-1 lg:order-2 bg-white rounded-xl shadow-lg overflow-hidden">
-          <img src={post.image} alt={post.title} class="w-full h-64 object-cover" />
-          <div class="p-8">
+          <img src={post.image} alt={post.title} class="w-full h-48 sm:h-64 object-cover" />
+          <div class="p-4 sm:p-8">
             <div class="flex items-center justify-between mb-4">
               <span class="bg-primary-100 text-primary-800 text-xs font-semibold px-2.5 py-0.5 rounded">{post.category}</span>
               <span class="text-gray-500 text-sm">{post.readingTime} okuma süresi</span>
@@ -365,15 +365,15 @@ const mostFavoritedPosts = [
       </div>
 
       <!-- Önceki ve Sonraki Yazılar -->
-      <div class="mt-12 flex justify-between">
+      <div class="mt-8 sm:mt-12 flex flex-col sm:flex-row justify-between">
         {prevPost && (
-          <a href={`/blog/${prevPost.id}`} class="flex items-center text-primary-600 hover:underline">
+          <a href={`/blog/${prevPost.id}`} class="flex items-center text-primary-600 hover:underline mb-4 sm:mb-0">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
             Önceki: {prevPost.title}
           </a>
         )}
         {nextPost && (
-          <a href={`/blog/${nextPost.id}`} class="flex items-center text-primary-600 hover:underline ml-auto">
+          <a href={`/blog/${nextPost.id}`} class="flex items-center text-primary-600 hover:underline sm:ml-auto">
             Sonraki: {nextPost.title}
             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </a>
