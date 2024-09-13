@@ -1,0 +1,1 @@
+import"./hoisted.DK4ngAm3.js";const t=document.querySelectorAll(".emoji-button");t.forEach(e=>{e.addEventListener("click",()=>{const o=e.getAttribute("data-emoji");console.log(`Emoji tıklandı: ${o}`),e.classList.add("scale-150"),setTimeout(()=>e.classList.remove("scale-150"),200)})});
