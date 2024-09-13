@@ -1,16 +1,23 @@
 ---
 const navItems = [
-  { href: '/', text: 'Ana Sayfa' },
-  { href: '/hizmetler', text: 'Hizmetler' },
-  { href: '/blog', text: 'Blog' },
-	{ href: '/pricing', text: 'Fiyatlandırma' },
-  { href: '/hakkimizda', text: 'Hakkımızda' },
-  { href: '/iletisim', text: 'İletişim' },
+  { href: `/`, text: 'Ana Sayfa' },
+  { href: `/hizmetler`, text: 'Hizmetler' },
+  { href: `/blog`, text: 'Blog' },
+  { href: `/pricing`, text: 'Fiyatlandırma' },
+  { href: `/hakkimizda`, text: 'Hakkımızda' },
+  { href: `/iletisim`, text: 'İletişim' },
 ];
 
 const currentPath = Astro.url.pathname;
 
 const announcement = "Yeni blog yazımız yayında: Dijital Dönüşümde 2024 Trendleri!";
+
+const languages = [
+  { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+];
+
+const currentLanguage = 'tr';
 ---
 
 <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
@@ -24,7 +31,7 @@ const announcement = "Yeni blog yazımız yayında: Dijital Dönüşümde 2024 T
       <a href="/" class="text-xl sm:text-2xl font-bold text-primary-600 hover:text-primary-700 transition duration-300">
         Dijital Destek
       </a>
-      <div class="hidden md:flex space-x-1">
+      <div class="hidden md:flex items-center space-x-1">
         {navItems.map((item) => (
           <a
             href={item.href}
@@ -37,6 +44,25 @@ const announcement = "Yeni blog yazımız yayında: Dijital Dönüşümde 2024 T
             {item.text}
           </a>
         ))}
+        <div class="relative ml-4">
+          <button id="language-dropdown" class="flex items-center text-gray-600 hover:text-primary-600 focus:outline-none">
+            <span class="mr-1 text-lg">{languages.find(lang => lang.code === currentLanguage)?.flag}</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div id="language-menu" class="absolute right-0 mt-2 py-2 w-32 bg-white rounded-md shadow-xl z-20 hidden">
+            {languages.map((lang) => (
+              <a
+                href={`/${lang.code}${currentPath}`}
+                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+              >
+                <span class="mr-2 text-lg">{lang.flag}</span>
+                {lang.name}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
       <div class="md:hidden">
         <button id="mobile-menu-button" class="text-gray-600 hover:text-primary-600 focus:outline-none">
@@ -61,12 +87,45 @@ const announcement = "Yeni blog yazımız yayında: Dijital Dönüşümde 2024 T
           {item.text}
         </a>
       ))}
+      <div class="mt-4 border-t border-gray-200 pt-4">
+        <p class="text-sm font-medium text-gray-600 mb-2">Dil Seçimi</p>
+        {languages.map((lang) => (
+          <a
+            href={`/${lang.code}${currentPath}`}
+            class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-primary-50 hover:text-primary-600"
+          >
+            <span class="mr-2 text-lg">{lang.flag}</span>
+            {lang.name}
+          </a>
+        ))}
+      </div>
     </div>
   </div>
 </header>
 
 <script>
-  // Mevcut script içeriği aynı kalabilir, scroll eventi kaldırılabilir
+  const languageDropdown = document.getElementById('language-dropdown');
+  const languageMenu = document.getElementById('language-menu');
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (languageDropdown && languageMenu) {
+    languageDropdown.addEventListener('click', () => {
+      languageMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!languageDropdown.contains(event.target) && !languageMenu.contains(event.target)) {
+        languageMenu.classList.add('hidden');
+      }
+    });
+  }
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
 </script>
 
 <style>
